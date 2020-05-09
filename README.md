@@ -1,2 +1,2 @@
 # UnityOneTimeVariable
-Little c# framework that handle one timed varible
+Little unity package that handle one timed varible
