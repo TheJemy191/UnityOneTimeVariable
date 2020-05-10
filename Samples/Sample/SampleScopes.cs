@@ -6,13 +6,14 @@ namespace OneTimeVariable
 {
     public class ScopePlayerPrefs : Scope
     {
-        private const string PLAYER_PREF = "OneTimePref";
-        string oneTimePrefName = PLAYER_PREF;
+        public static void Setting(string playerPrefName) => ScopePlayerPrefs.playerPrefName = playerPrefName;
 
-        public void Setup(string extraInfo) => oneTimePrefName = $"{PLAYER_PREF}_{extraInfo}";
+        private static string playerPrefName = "OneTimePref";
 
+        string oneTimePrefName = playerPrefName;
+
+        public void Setup(string extraInfo) => oneTimePrefName = $"{playerPrefName}_{extraInfo}";
         public override void Init() => Load();
-
         public override void Save() => PlayerPrefs.SetString(oneTimePrefName, string.Join(";", oneTimes));
 
         protected override void Load() => oneTimes = new HashSet<string>(PlayerPrefs.GetString(oneTimePrefName, "").Split(';'));
@@ -26,14 +27,17 @@ namespace OneTimeVariable
         {
             (nestedScope as ScopePlayerPrefs)?.Setup(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
             base.Init();
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneLoaded;
+
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ActiveSceneChanged;
             UnityEngine.SceneManagement.SceneManager.sceneUnloaded += s => { nestedScope.Save(); };
         }
 
-        private void SceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode arg1)
+        private void ActiveSceneChanged(UnityEngine.SceneManagement.Scene oldScene, UnityEngine.SceneManagement.Scene newScene)
         {
+            if (oldScene.name != null)
+                nestedScope.Save();
             nestedScope = new T();
-            (nestedScope as ScopePlayerPrefs)?.Setup(scene.name);
+            (nestedScope as ScopePlayerPrefs)?.Setup(newScene.name);
             nestedScope.Init();
         }
     }

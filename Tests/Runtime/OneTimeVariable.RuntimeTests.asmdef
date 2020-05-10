@@ -1,0 +1,22 @@
+{
+    "name": "OneTimeVariable.RuntimeTests",
+    "references": [
+        "GUID:bdb4a99f874a9d94f99673c2991e4c72",
+        "GUID:d53ae3ce5f1f0924da22da14a941a634",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

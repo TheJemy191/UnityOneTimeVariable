@@ -7,16 +7,27 @@ namespace OneTimeVariable
     {
         static Dictionary<Type, Scope> scopes = new Dictionary<Type, Scope>();
 
-        public static bool Register<T>() where T : Scope, new()
+        public static void Register<T>() where T : Scope, new()
         {
             if (!scopes.ContainsKey(typeof(T)))
             {
                 T scope = new T();
                 scope.Init();
                 scopes.Add(typeof(T), scope);
-                return true;
             }
-            return false;
+            else
+                throw new ArgumentException($"{typeof(T).Name} already register");
+        }
+
+        public static void Unregsiter<T>() where T : Scope, new()
+        {
+            if (scopes.ContainsKey(typeof(T)))
+            {
+                scopes[typeof(T)].Save();
+                scopes.Remove(typeof(T));
+            }
+            else
+                throw new KeyNotFoundException($"{typeof(T).Name} was not register");
         }
 
         public static Scope Get<T>()
