@@ -1,5 +1,5 @@
 # UnityOneTimeVariable
-Little unity package that handle one timed varible
+Little unity package that handle one timed variable
 
 ## How to use
 ```c#
