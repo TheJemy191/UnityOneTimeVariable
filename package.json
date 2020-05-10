@@ -7,12 +7,6 @@
   },
   "type": "library",
   "unity": "2019.1",
-  "samples": [
-    {
-      "displayName": "Sample",
-      "path": "Samples/Sample"
-    }
-  ],
   "description": "Little unity package that handle one timed varible",
   "hideInEditor": false
 }

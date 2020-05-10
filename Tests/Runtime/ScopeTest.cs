@@ -4,6 +4,7 @@ using UnityEngine;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using OneTimeVariable.BasicScope;
 
 namespace OneTimeVariable
 {

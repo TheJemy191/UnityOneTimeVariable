@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace OneTimeVariable
+namespace OneTimeVariable.BasicScope
 {
     public class ScopePlayerPrefs : Scope
     {
