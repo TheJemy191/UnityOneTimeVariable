@@ -23,9 +23,11 @@ namespace OneTimeVariable.BasicScope
 
     public class ScopeScene<T> : ScopeNested<T> where T : Scope, new()
     {
+        public static event System.Action<Scope> OnInit;
+
         public override void Init()
         {
-            (nestedScope as ScopePlayerPrefs)?.Setup(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            OnInit.Invoke(nestedScope);
             base.Init();
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ActiveSceneChanged;
