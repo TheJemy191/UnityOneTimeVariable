@@ -22,6 +22,7 @@ Session, Scene, PlayerPref, Database even, WorldWide? YES YOU CAN!
 ## Installation
 Copy the clone link. And add the package to unity packageManager.  
 ![UnityAddGitPackage](UnityAddGitPackage.png)
+
 ## How to use
 ```c#
 using OneTimeVariable;
@@ -52,3 +53,5 @@ By classes type
 OneTime.Get<ScopeLocal>()[typeof(MyClass)]; // One time for the class MyClass
 OneTime.Get<ScopeLocal>()[typeof(MyClass), "oneTime"]; // One Time for "oneTime" for the classMyClass
 ```
+
+PS: If you work at EdokyAcademy and want to change this do a pull request
