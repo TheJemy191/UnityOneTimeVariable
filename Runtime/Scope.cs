@@ -31,6 +31,7 @@ namespace OneTimeVariable
             }
         }
 
-        public bool this[Type key] => this[key.FullName];
+        public bool this[Type key] => this[key.ToString()];
+        public bool this[Type typeKey, string key] => this[$"{key}_{typeKey.ToString()}"];
     }
 }
