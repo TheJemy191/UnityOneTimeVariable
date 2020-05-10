@@ -19,6 +19,9 @@ Yes so this little package is for you.
 This package will handle oneTimed variable by scope like:  
 Session, Scene, PlayerPref, Database even, WorldWide? YES YOU CAN!
 
+## Installation
+Copy the clone link. And add the package to unity packageManager.  
+![UnityAddGitPackage](UnityAddGitPackage.png)
 ## How to use
 ```c#
 using OneTimeVariable;
