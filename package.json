@@ -6,5 +6,13 @@
     "name": "\u00c9milie Collard"
   },
   "type": "library",
-  "unity": "2017.1"
+  "unity": "2019.1",
+  "samples": [
+    {
+      "displayName": "Sample",
+      "path": "Samples/Sample"
+    }
+  ],
+  "description": "Little unity package that handle one timed varible",
+  "hideInEditor": false
 }
