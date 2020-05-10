@@ -23,7 +23,7 @@ namespace OneTimeVariable.BasicScope
 
     public class ScopeScene<T> : ScopeNested<T> where T : Scope, new()
     {
-        public static event System.Action<Scope> OnInit;
+        public static event System.Action<T> OnInit;
 
         public override void Init()
         {
