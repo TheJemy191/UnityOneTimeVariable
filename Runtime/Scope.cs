@@ -19,9 +19,6 @@ namespace OneTimeVariable
                 if (isSeeking)
                     return !oneTimes.Contains(key);
 
-                if (oneTimes == null)
-                    return false;
-
                 if (oneTimes.Contains(key))
                     return false;
                 else
