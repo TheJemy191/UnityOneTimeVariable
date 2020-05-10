@@ -27,7 +27,7 @@ namespace OneTimeVariable
             var scene = SceneManager.CreateScene("ScopeLocalTestScene");
             SceneManager.SetActiveScene(scene);
 
-            Assert.IsTrue(OneTime.Get<ScopeLocal>()["Test"]);
+            Assert.IsFalse(OneTime.Get<ScopeLocal>()["Test"]);
         }
 
         [Test]
@@ -53,8 +53,8 @@ namespace OneTimeVariable
 
         private static void AssetScope<T>(string testString) where T : Scope, new()
         {
-            Assert.IsFalse(OneTime.Get<T>()[testString]);
             Assert.IsTrue(OneTime.Get<T>()[testString]);
+            Assert.IsFalse(OneTime.Get<T>()[testString]);
         }
     }
 }

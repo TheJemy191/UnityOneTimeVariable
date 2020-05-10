@@ -17,17 +17,17 @@ namespace OneTimeVariable
             get
             {
                 if (isSeeking)
-                    return oneTimes.Contains(key);
+                    return !oneTimes.Contains(key);
 
                 if (oneTimes == null)
                     return false;
 
                 if (oneTimes.Contains(key))
-                    return true;
+                    return false;
                 else
                     oneTimes.Add(key);
 
-                return false;
+                return true;
             }
         }
 
