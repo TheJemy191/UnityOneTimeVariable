@@ -10,5 +10,6 @@
         }
 
         public override bool this[string key, bool isSeeking = false] => nestedScope[key, isSeeking];
+        public override bool this[System.Type type, string key, bool isSeeking = false] => nestedScope[type, key, isSeeking];
     }
 }
