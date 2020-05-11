@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace OneTimeVariable.BasicScope
 {
@@ -23,22 +24,28 @@ namespace OneTimeVariable.BasicScope
 
     public class ScopeScene<T> : ScopeNested<T> where T : Scope, new()
     {
+        /// <summary>Assign before creating</summary>
         public static event System.Action<T> OnInit;
+        /// <summary>Assign before creating</summary>
+        public static event System.Action<T, Scene> OnSceneChange;
 
         public override void Init()
         {
-            OnInit.Invoke(nestedScope);
+            if (OnInit != null)
+                OnInit.Invoke(nestedScope);
             base.Init();
 
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ActiveSceneChanged;
-            UnityEngine.SceneManagement.SceneManager.sceneUnloaded += s => { nestedScope.Save(); };
+            SceneManager.activeSceneChanged += ActiveSceneChanged;
+            SceneManager.sceneUnloaded += s => { nestedScope.Save(); };
         }
 
-        private void ActiveSceneChanged(UnityEngine.SceneManagement.Scene oldScene, UnityEngine.SceneManagement.Scene newScene)
+        private void ActiveSceneChanged(Scene oldScene, Scene newScene)
         {
             if (oldScene.name != null)
                 nestedScope.Save();
             nestedScope = new T();
+            if (OnSceneChange != null)
+                OnSceneChange.Invoke(nestedScope, newScene);
             (nestedScope as ScopePlayerPrefs)?.Setup(newScene.name);
             nestedScope.Init();
         }
