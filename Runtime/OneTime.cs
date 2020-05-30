@@ -5,15 +5,15 @@ namespace OneTimeVariable
 {
     public static class OneTime
     {
-        static Dictionary<Type, Scope> scopes = new Dictionary<Type, Scope>();
+        private static readonly Dictionary<Type, Scope> Scopes = new Dictionary<Type, Scope>();
 
         public static void Register<T>() where T : Scope, new()
         {
-            if (!scopes.ContainsKey(typeof(T)))
+            if (!Scopes.ContainsKey(typeof(T)))
             {
                 T scope = new T();
                 scope.Init();
-                scopes.Add(typeof(T), scope);
+                Scopes.Add(typeof(T), scope);
             }
             else
                 throw new ArgumentException($"{typeof(T).Name} already register");
@@ -21,10 +21,10 @@ namespace OneTimeVariable
 
         public static void Unregsiter<T>() where T : Scope, new()
         {
-            if (scopes.ContainsKey(typeof(T)))
+            if (Scopes.ContainsKey(typeof(T)))
             {
-                scopes[typeof(T)].Save();
-                scopes.Remove(typeof(T));
+                Scopes[typeof(T)].Save();
+                Scopes.Remove(typeof(T));
             }
             else
                 throw new KeyNotFoundException($"{typeof(T).Name} was not register");
@@ -32,8 +32,8 @@ namespace OneTimeVariable
 
         public static Scope Get<T>()
         {
-            if (scopes.ContainsKey(typeof(T)))
-                return scopes[typeof(T)];
+            if (Scopes.ContainsKey(typeof(T)))
+                return Scopes[typeof(T)];
             else
                 throw new KeyNotFoundException($"Scope {nameof(T)} not register yet");
         }

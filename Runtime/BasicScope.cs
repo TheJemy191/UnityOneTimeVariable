@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,15 +8,14 @@ namespace OneTimeVariable.BasicScope
     {
         public static void Setting(string playerPrefName) => ScopePlayerPrefs.playerPrefName = playerPrefName;
 
-        private static string playerPrefName = "OneTimePref";
+        static string playerPrefName = "OneTimePref";
 
         string oneTimePrefName = playerPrefName;
 
         public void Setup(string extraInfo) => oneTimePrefName = $"{playerPrefName}_{extraInfo}";
         public override void Init() => Load();
-        public override void Save() => PlayerPrefs.SetString(oneTimePrefName, string.Join(";", oneTimes));
-
-        protected override void Load() => oneTimes = new HashSet<string>(PlayerPrefs.GetString(oneTimePrefName, "").Split(';'));
+        public override void Save() => PlayerPrefs.SetString(oneTimePrefName, string.Join(";", OneTimes));
+        protected override void Load() => OneTimes = new HashSet<string>(PlayerPrefs.GetString(oneTimePrefName, "").Split(';'));
     }
 
     public class ScopeLocal : Scope { }
@@ -31,23 +29,24 @@ namespace OneTimeVariable.BasicScope
 
         public override void Init()
         {
-            if (OnInit != null)
-                OnInit.Invoke(nestedScope);
+            OnInit?.Invoke(NestedScope);
             base.Init();
 
             SceneManager.activeSceneChanged += ActiveSceneChanged;
-            SceneManager.sceneUnloaded += s => { nestedScope.Save(); };
+            SceneManager.sceneUnloaded += s => { NestedScope.Save(); };
         }
 
         private void ActiveSceneChanged(Scene oldScene, Scene newScene)
         {
             if (oldScene.name != null)
-                nestedScope.Save();
-            nestedScope = new T();
-            if (OnSceneChange != null)
-                OnSceneChange.Invoke(nestedScope, newScene);
-            (nestedScope as ScopePlayerPrefs)?.Setup(newScene.name);
-            nestedScope.Init();
+                NestedScope.Save();
+            
+            NestedScope = new T();
+            
+            OnSceneChange?.Invoke(NestedScope, newScene);
+            (NestedScope as ScopePlayerPrefs)?.Setup(newScene.name);
+            
+            NestedScope.Init();
         }
     }
 }

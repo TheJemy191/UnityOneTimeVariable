@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OneTimeVariable
 {
     public abstract class Scope
     {
-        protected HashSet<string> oneTimes = new HashSet<string>();
+        protected HashSet<string> OneTimes = new HashSet<string>();
 
         public virtual void Init() { }
 
@@ -17,17 +17,17 @@ namespace OneTimeVariable
             get
             {
                 if (isSeeking)
-                    return !oneTimes.Contains(key);
+                    return !OneTimes.Contains(key);
 
-                if (oneTimes.Contains(key))
+                if (OneTimes.Contains(key))
                     return false;
-                else
-                    oneTimes.Add(key);
+                
+                OneTimes.Add(key);
 
                 return true;
             }
         }
 
-        public virtual bool this[Type typeKey, string key, bool isSeeking = false] => this[$"{key}_{typeKey.ToString()}", isSeeking];
+        public virtual bool this[Type typeKey, string key, bool isSeeking = false] => this[$"{key}_{typeKey}", isSeeking];
     }
 }

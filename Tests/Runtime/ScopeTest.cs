@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using NUnit.Framework;
-using UnityEngine.TestTools;
+﻿using NUnit.Framework;
 using UnityEngine.SceneManagement;
 using OneTimeVariable.BasicScope;
 
@@ -10,8 +6,6 @@ namespace OneTimeVariable
 {
     public class ScopeTest
     {
-        private const string PlayerPrefName = "OneTimePrefTest";
-
         [OneTimeSetUp]
         public void SetUp()
         {
@@ -51,7 +45,7 @@ namespace OneTimeVariable
             AssetScope<ScopeScene<ScopeLocal>>("Test");
         }
 
-        private static void AssetScope<T>(string testString) where T : Scope, new()
+        static void AssetScope<T>(string testString) where T : Scope, new()
         {
             Assert.IsTrue(OneTime.Get<T>()[testString]);
             Assert.IsFalse(OneTime.Get<T>()[testString]);
